@@ -1,6 +1,7 @@
 package com.example.cs441_assignment2_android;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,10 +11,10 @@ import android.widget.GridView;
 import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
-    List<String> lstSource;
-    Context mContext;
+    private List<String> lstSource;
+    private Context mContext;
 
-    public GridViewAdapter(List<String> lstSource, Context mContext) {
+    GridViewAdapter(List<String> lstSource, Context mContext) {
         this.lstSource = lstSource;
         this.mContext = mContext;
     }
@@ -36,13 +37,15 @@ public class GridViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Button button;
-        if (convertView) {
-            button = (Button) convertView;
-        } else {
+        if (convertView == null) {
             button = new Button(mContext);
-            button.setLayoutParams(new GridView.LayoutParams(85,85));
-            button.setPadding(8,8,8,8);
-
+            button.setLayoutParams(new GridView.LayoutParams(150,150));
+            button.setPadding(0,0,0,0);
+            button.setText(lstSource.get(position));
+            button.setBackgroundColor(Color.DKGRAY);
+            button.setTextColor(Color.YELLOW);
+        } else {
+            button = (Button) convertView;
         }
 
         return button;
