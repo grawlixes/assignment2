@@ -5,12 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <include
         layout="@layout/content_main"
         app:layout_anchor="@+id/gridview"
-        app:layout_anchorGravity="right|bottom" />
+        app:layout_anchorGravity="right|bottom"
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="266dp"
+        android:layout_height="264dp"
+        android:layout_alignTop="@+id/gridview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:contentDescription="@string/_GVbackground"
+        app:srcCompat="@drawable/greenbg" />
 
     <GridView
         android:id="@+id/gridview"
@@ -22,6 +34,7 @@
         android:numColumns="4"
         android:stretchMode="columnWidth"
         android:verticalSpacing="7dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        />
 
 </RelativeLayout>

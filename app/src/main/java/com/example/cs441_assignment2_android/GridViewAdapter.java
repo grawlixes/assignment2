@@ -11,22 +11,23 @@ import android.widget.GridView;
 import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
-    private List<String> lstSource;
+    private String[][] lstSource;
     private Context mContext;
+    private static final int NUM_ELEMENTS = 16;
 
-    GridViewAdapter(List<String> lstSource, Context mContext) {
+    GridViewAdapter(String[][] lstSource, Context mContext) {
         this.lstSource = lstSource;
         this.mContext = mContext;
     }
 
     @Override
     public int getCount() {
-        return this.lstSource.size();
+        return NUM_ELEMENTS;
     }
 
     @Override
     public Object getItem(int position) {
-        return lstSource.get(position);
+        return lstSource[position/4][position%4];
     }
 
     @Override
@@ -41,9 +42,9 @@ public class GridViewAdapter extends BaseAdapter {
             button = new Button(mContext);
             button.setLayoutParams(new GridView.LayoutParams(150,150));
             button.setPadding(0,0,0,0);
-            button.setText(lstSource.get(position));
+            button.setText(lstSource[position/4][position%4]);
             button.setBackgroundColor(Color.BLACK);
-            button.setTextColor(Color.WHITE);
+            button.setTextColor(Color.GREEN);
         } else {
             button = (Button) convertView;
         }

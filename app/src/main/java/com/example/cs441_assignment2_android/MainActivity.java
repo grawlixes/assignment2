@@ -9,26 +9,32 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<String> lstSource = new ArrayList<>();
+    String lstSource[][] = new String[4][4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        for (int i = 0; i < 16; i++) {
-            lstSource.add("-");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                lstSource[i][j] = "-";
+            }
         }
 
         GridView gv = findViewById(R.id.gridview);
         GridViewAdapter gva = new GridViewAdapter(lstSource, this);
         gv.setAdapter(gva);
+
+        ImageView iv = findViewById(R.id.imageView);
+        iv.setY(-25);
     }
 
     @Override
