@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         for (int i = 0; i < 16; i++) {
-            lstSource.add("duh");
+            lstSource.add("-");
         }
 
         GridView gv = findViewById(R.id.gridview);
