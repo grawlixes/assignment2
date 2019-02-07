@@ -11,8 +11,7 @@
     <include
         layout="@layout/content_main"
         app:layout_anchor="@+id/gridview"
-        app:layout_anchorGravity="right|bottom"
-        />
+        app:layout_anchorGravity="right|bottom" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -36,5 +35,25 @@
         android:verticalSpacing="7dp"
         android:layout_centerInParent="true"
         />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="500dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/rotate_c" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="500dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginLeft="300dp"
+        android:src="@drawable/rotate_cc" />
 
 </RelativeLayout>

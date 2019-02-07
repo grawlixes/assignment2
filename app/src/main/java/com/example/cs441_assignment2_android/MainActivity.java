@@ -17,24 +17,54 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     String lstSource[][] = new String[4][4];
+    GridView gv;
+    GridViewAdapter gva;
+    ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Build the empty 2048 grid.
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 lstSource[i][j] = "-";
             }
         }
 
-        GridView gv = findViewById(R.id.gridview);
-        GridViewAdapter gva = new GridViewAdapter(lstSource, this);
+        // Update the grid.
+        gv = findViewById(R.id.gridview);
+        gva = new GridViewAdapter(lstSource, this);
         gv.setAdapter(gva);
 
-        ImageView iv = findViewById(R.id.imageView);
+        // Put a background behind the grid.
+        iv = findViewById(R.id.imageView);
         iv.setY(-25);
+
+        // Generate the first random '2' block.
+
+        gva.generateRandom2();
+
+        FloatingActionButton fab = findViewById(R.id.fabC);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            // This code runs when you try flipping the board clockwise.
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        FloatingActionButton fab2 = findViewById(R.id.fabCC);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            // This code runs when you try flipping the board counterclockwise.
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar also", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
