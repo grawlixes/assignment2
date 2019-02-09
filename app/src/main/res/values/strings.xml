@@ -2,5 +2,7 @@
     <string name="app_name">cs441-assignment2-android</string>
     <string name="action_settings">Settings</string>
     <string name="_title">gravi-2048</string>
+    <string name="_currentScore">Current score:</string>
+    <string name="_score">0</string>
     <string name="_GVbackground">GridView Background</string>
 </resources>

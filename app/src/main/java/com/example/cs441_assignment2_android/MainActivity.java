@@ -1,18 +1,23 @@
 package com.example.cs441_assignment2_android;
 
+import android.arch.core.util.Function;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     GridView gv;
     GridViewAdapter gva;
     ImageView iv;
+    TextView score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,27 +48,58 @@ public class MainActivity extends AppCompatActivity {
         iv = findViewById(R.id.imageView);
         iv.setY(-25);
 
+        score = findViewById(R.id.score);
+
         // Generate the first random '2' block.
+        gva.generateBlock();
 
-        gva.generateRandom2();
+        // Set the buttons' actions.
+        FloatingActionButton fabC = findViewById(R.id.fabC);
+        setOnClick(fabC, "C");
 
-        FloatingActionButton fab = findViewById(R.id.fabC);
+        FloatingActionButton fabCC = findViewById(R.id.fabCC);
+        setOnClick(fabCC, "CC");
+
+        FloatingActionButton fabF = findViewById(R.id.fabF);
+        setOnClick(fabF, "F");
+    }
+
+    // This function wraps the setOnClickListener method so
+    // that I can pick which adapter function I want to use
+    // to alter the board.
+    public void setOnClick(FloatingActionButton fab, final String option) {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            // This code runs when you try flipping the board clockwise.
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            public void onClick(View v) {
+                if (option.equals("C")) {
+                    gva.rotateC();
+                } else if (option.equals("CC")) {
+                    gva.rotateCC();
+                } else {
+                    gva.flip();
+                }
 
-        FloatingActionButton fab2 = findViewById(R.id.fabCC);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            // This code runs when you try flipping the board counterclockwise.
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar also", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // Update the view before allowing to fall down.
+                gva.notifyDataSetChanged();
+                gv.setAdapter(gva);
+
+                // After rotating, let "gravity" pull everything down with "fallDown."
+                // fallDown returns the score given by this move, which is added to the total.
+                score.setText(String.valueOf(Integer.parseInt(String.valueOf(score.getText())) +
+                        gva.fallDown()));
+
+                // Check if the "winner" flag was set off, i.e. the user
+                // got to 2048. If so, the player wins and starts over.
+                if (gva.isWinner()) {
+                    // You win!
+                }
+                // Generate the next 2. If it fails, then we quit because
+                // the user has lost the game without getting to 2048.
+                if (!gva.generateBlock()) {
+                    // Game over!
+                }
+                gva.notifyDataSetChanged();
+                gv.setAdapter(gva);
             }
         });
     }

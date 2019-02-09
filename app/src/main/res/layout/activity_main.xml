@@ -15,13 +15,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="266dp"
+        android:layout_width="300dp"
         android:layout_height="264dp"
         android:layout_alignTop="@+id/gridview"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
         android:contentDescription="@string/_GVbackground"
-        app:srcCompat="@drawable/greenbg" />
+        app:srcCompat="@drawable/greenbgbig" />
 
     <GridView
         android:id="@+id/gridview"
@@ -55,5 +54,15 @@
         android:layout_marginStart="300dp"
         android:layout_marginLeft="300dp"
         android:src="@drawable/rotate_cc" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="550dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginLeft="175dp"
+        android:src="@drawable/flip" />
 
 </RelativeLayout>
