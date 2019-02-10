@@ -242,10 +242,12 @@ public class GridViewAdapter extends BaseAdapter {
                 } else if (i != 0 && lst_source[i][j].equals(lst_source[i - 1][j])) {
                     // Erase both blocks to combine, and then replace the bottom
                     // one with twice its original value to simulate combination.
+                    // Also, update the "won" variable if it ends up being 2048.
                     String cur = lst_source[i][j];
                     lst_source[i][j] = "-";
                     lst_source[i - 1][j] = "-";
                     lst_source[i + offset][j] = String.valueOf(2 * Integer.parseInt(cur));
+
                     // Offset has increased by one.
                     offset++;
                     // Skip the new blank space.

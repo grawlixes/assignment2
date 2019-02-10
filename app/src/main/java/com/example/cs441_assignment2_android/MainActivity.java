@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     GridView gv;
     GridViewAdapter gva;
     ImageView iv;
-    TextView game_over_text;
+    TextView endgame_text;
     TextView score;
     TextView best_score;
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         iv = findViewById(R.id.imageView);
         iv.setY(-25);
 
-        game_over_text = findViewById(R.id.gom);
+        endgame_text = findViewById(R.id.gom);
         score = findViewById(R.id.score);
         best_score = findViewById(R.id.best_score);
 
@@ -69,15 +69,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // If it's not already black (a game over just occurred),
                 // then set it back to black so it disappears.
-                game_over_text.setTextColor(Color.BLACK);
+                endgame_text.setTextColor(Color.BLACK);
 
-                // Choose which way to flip/rotate based on what button was clicked.
-                if (option.equals("C")) {
-                    gva.rotateC();
-                } else if (option.equals("CC")) {
-                    gva.rotateCC();
-                } else {
-                    gva.flip();
+                // Choose rotation type.
+                switch (option) {
+                    case "C":
+                        gva.rotateC();
+                        break;
+                    case "CC":
+                        gva.rotateCC();
+                        break;
+                    case "F":
+                        gva.flip();
+                        break;
                 }
 
                 // Update the view before allowing to fall down.
@@ -93,15 +97,11 @@ public class MainActivity extends AppCompatActivity {
                 // the user has lost the game without getting to 2048.
                 if (!gva.generateBlock()) {
                     // Alert the user that they suck and have lost the game.
-                    game_over_text.setTextColor(Color.GREEN);
+                    endgame_text.setTextColor(Color.GREEN);
 
-                    // Clear the board.
                     gva.gameOver();
-                    // Start over.
                     gva.generateBlock();
 
-                    // The amount of inner functions here is ridiculous,
-                    // but I'm just changing the best score.
                     best_score.setText(String.valueOf(Math.max(
                             Integer.parseInt(String.valueOf(best_score.getText())),
                             Integer.parseInt(String.valueOf(score.getText())))));
