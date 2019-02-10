@@ -2,7 +2,6 @@ package com.example.cs441_assignment2_android;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 // I used this to learn how to use GridView and create adapters:
 // https://www.youtube.com/watch?v=HbEHxkAEumU
@@ -28,8 +26,6 @@ public class GridViewAdapter extends BaseAdapter {
     // just added. (-1, -1) if none. I use this because I want
     // the most recent block to be colored white for contrast.
     private int[] most_recent = {-1, -1};
-    // Did I win?
-    private boolean winner = false;
 
     private static final int NUM_ELEMENTS = 16;
 
@@ -81,7 +77,6 @@ public class GridViewAdapter extends BaseAdapter {
                 // Winning spaces (2048) are purely green.
                 button.setBackgroundColor(Color.GREEN);
                 button.setTextColor(Color.BLACK);
-                winner = true;
             } else if (position/4 == most_recent[0] && position%4 == most_recent[1]) {
                 // Most recently added '2' blocks are white for contrast.
                 button.setBackgroundColor(Color.WHITE);
@@ -96,7 +91,7 @@ public class GridViewAdapter extends BaseAdapter {
                 int actual = new_color << 8;
 
                 // If it's too dark, make the text color green so it's easier to see.
-                if (new_color < 128) {
+                if (new_color < 128 && Integer.parseInt(lst_source[position/4][position%4]) < 2048) {
                     button.setTextColor(Color.GREEN);
                 } else {
                     button.setTextColor(Color.BLACK);
@@ -113,12 +108,6 @@ public class GridViewAdapter extends BaseAdapter {
         }
 
         return button;
-    }
-
-    // Check this after each move. If it returns true, exit the game
-    // with a victory message for the user - it stops at 2048.
-    boolean isWinner() {
-        return winner;
     }
 
     // Package-private method that generates a new number
@@ -236,14 +225,11 @@ public class GridViewAdapter extends BaseAdapter {
                 }
             }
 
-            // No need to sleep and update if there are no blocks.
+            // No need to continue if there are no blocks.
             if (bottom == 3) {
-                Log.d("BOTTOM", String.valueOf(j));
                 continue;
             }
 
-            // Keep track of whether we've actually changed anything.
-            boolean unchanged = true;
             // If we combine blocks together, everything above the combined blocks
             // needs to be shifted down by one, regardless of whether they end up
             // getting combined themselves. So, each time blocks combine, increment this.
@@ -253,21 +239,19 @@ public class GridViewAdapter extends BaseAdapter {
                     // We're done - no numbers can exist above an empty space
                     // since we just dropped everything down, so exit the loop.
                     break;
-                } else if (i != 0 && lst_source[i][j].equals(lst_source[i-1][j])) {
+                } else if (i != 0 && lst_source[i][j].equals(lst_source[i - 1][j])) {
                     // Erase both blocks to combine, and then replace the bottom
                     // one with twice its original value to simulate combination.
                     String cur = lst_source[i][j];
                     lst_source[i][j] = "-";
-                    lst_source[i-1][j] = "-";
-                    lst_source[i+offset][j] = String.valueOf(2*Integer.parseInt(cur));
+                    lst_source[i - 1][j] = "-";
+                    lst_source[i + offset][j] = String.valueOf(2 * Integer.parseInt(cur));
                     // Offset has increased by one.
                     offset++;
                     // Skip the new blank space.
                     i--;
-                    // We changed something, so we have to sleep & update (see below).
-                    unchanged = false;
                     // Add the value of the new block to the score.
-                    score += 2*Integer.parseInt(cur);
+                    score += 2 * Integer.parseInt(cur);
                     // Also, a new space is free.
                     available_spaces++;
                 } else {
@@ -275,17 +259,22 @@ public class GridViewAdapter extends BaseAdapter {
                     // moves down as much as the offset says we need to.
                     String cur = lst_source[i][j];
                     lst_source[i][j] = "-";
-                    lst_source[i+offset][j] = cur;
+                    lst_source[i + offset][j] = cur;
                 }
-            }
-
-            // No need to sleep and update if nothing's changed.
-            if (unchanged) {
-                Log.d("UNCHANGED", String.valueOf(j));
-                continue;
             }
         }
 
         return score;
+    }
+
+    // Clear the board.
+    void gameOver() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j<4; j++) {
+                lst_source[i][j] = "-";
+            }
+        }
+
+        available_spaces = 16;
     }
 }
