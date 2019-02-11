@@ -12,7 +12,15 @@ Now that you understand how it works, check this out for a short video demo: htt
 
 Fun facts about the app:
 
-    - The entire game's UI was made with only green hues. However, if you get very far, you'll see some special colors; after you get past a 2048 block, the blocks' colors get wild. This was originally due to a mistake with how I handled colors in the blocks, but it looks cool, so I changed it slightly and kept it in.
-    - The only images (ImageView objects) I use in this game are for the buttons and background. The blocks themselves are all naturally generated GridView objects; the color that their background shows is programmatically decided by the number in the box. The higher the number, the less green hue is applied to the background.
-    - The green "background"/green lines between blocks are actually just a big green square image. I placed that ImageView behind the GridView to make it look like a legit grid. Also, I know the margins are slightly off, and it annoys me too.
-    - I originally wanted to do this because I wanted to ruin the classic 2048 strategy of keeping the largest block in one of the corners. However, it's actually even easier to do that in my game than in original 2048, because you can just alternate rotations and never flip. Oops. I'm a programmer, not a game designer.
+    - The entire game's UI was made with only green hues. However, if you get very far, you'll see some special colors; 
+    after you get past a 2048 block, the blocks' colors get wild. This was originally due to a mistake with how I handled
+    colors in the blocks, but it looks cool, so I changed it slightly and kept it in.
+    - The only images (ImageView objects) I use in this game are for the buttons and background. The blocks themselves
+    are all naturally generated GridView objects; the color that their background shows is programmatically decided by
+    the number in the box. The higher the number, the less green hue is applied to the background.
+    - The green "background"/green lines between blocks are actually just a big green square image. I placed that
+    ImageView behind the GridView to make it look like a legit grid. Also, I know the margins are slightly off, and it
+    annoys me too.
+    - I originally wanted to do this because I wanted to ruin the classic 2048 strategy of keeping the largest block in 
+    one of the corners. However, it's actually even easier to do that in my game than in original 2048, because you can
+    just alternate rotations and never flip. Oops. I'm a programmer, not a game designer.
